@@ -15,57 +15,61 @@ namespace ConsoleApplication1_Lab6_2_
 
             bool answer = true;
             while (answer)
-            
+
             {
-                Console.WriteLine("Please enter a word to be translated.");
-                string word = Console.ReadLine();
+                Console.WriteLine("Please enter a sentance to be translated.");
+                string sentence = Console.ReadLine();
                 //string word = englishWord.ToLower();
-                string[] array = word.Split();
+                string[] wordsInSentence = sentence.Split();
 
                 string pigLatin;
                 string extraLetters;
                 char[] vowel = { 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' };
-                int firstVowel = word.IndexOfAny(vowel);
+                int firstVowel = sentence.IndexOfAny(vowel);
+                char[] numbersSymbols = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '@', '#', '$', '%', '_' };
 
-                foreach (string value in array)
+                foreach (string word in wordsInSentence)
                 {
 
-                    if (value == "")
+                    if (word == "")
                     {
                         Console.WriteLine("Error. Please enter a word to be translated.");
                     }
 
-                    if (vowel.Contains(value[0]))
+                    if (word.IndexOfAny(numbersSymbols) >= 0)
                     {
-                        string newWord = value + "way" + " ";
+                        Console.Write(word);
+                    }
+
+                    else if (vowel.Contains(word[0]))
+                    {
+                        string newWord = word + "way" + " ";
                         Console.Write(newWord);
                     }
                     else
                     {
-                        extraLetters = value.Substring(firstVowel);
-                        pigLatin = extraLetters + word.Substring(0, firstVowel);
+                        extraLetters = word.Substring(firstVowel);
+                        pigLatin = extraLetters + sentence.Substring(0, firstVowel);
                         Console.Write(pigLatin + "ay" + " ");
                     }
 
                     if (firstVowel == -1)
                     {
-                        string newWord = value + "ay" + " ";
+                        string newWord = word + "ay" + " ";
                         Console.Write(newWord);
                     }
                 }
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Do you want to continue? Yes/No");
+                    string response = Console.ReadLine();
+                    if (!(response.ToLower() == "y" || response.ToLower() == "yes"))
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("Do you want to continue? Yes/No");
-                        string response = Console.ReadLine();
-                        if (!(response.ToLower() == "y" || response.ToLower() == "yes"))
-                        {
-                            answer = false;
-                            Console.WriteLine("You may press enter to exit.");
-                            Console.ReadKey();
-                        }
+                        answer = false;
+                        Console.WriteLine("You may press enter to exit.");
+                        Console.ReadKey();
                     }
-                
-
+                }
             }
         }
     }
